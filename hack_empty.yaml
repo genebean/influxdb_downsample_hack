@@ -1,14 +1,17 @@
 template-id: downsample_measurement
 dbrps:
   - db: replace_with_db
-    rp: replace_with_rp
+    rp: replace_with_from_rp
 vars:
   from_db:
     type: string
     value: replace_with_db
   from_rp:
     type: string
-    value: replace_with_rp
+    value: replace_with_from_rp
+  to_rp:
+    type: string
+    value: replace_with_to_rp
   measurement:
     type: string
     value: replace_with_measurement

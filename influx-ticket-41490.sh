@@ -1,3 +1,8 @@
+if [ "$#" -ne 3 ]; then
+    echo "Usage: $0 db_name from_rp_name to_rp_name"
+    exit 1
+fi
+
 [ "$DEBUG" == 'true' ] && set -x
 
 # bring in the non-sharable things.
@@ -5,7 +10,8 @@ source local_vars
 
 # To enable working with more than one db we get the db's name from stdin
 export DB_NAME=$1
-export RP_NAME=$2
+export FROM_RP_NAME=$2
+export TO_RP_NAME=$3
 
 ### Step One --- cleaning out existing jobs
 ### First line, deletes all the existing kapacitor scripts that start with 'hack'
@@ -27,7 +33,8 @@ for MEASUREMENT in $(tail -n +4 $WORKING_DIR/tmp/dbtmp.txt );do
   ### Alters a stock .json file to create specific ones for the measurement in the loop
   cat $WORKING_DIR/hack_empty.yaml \
   | sed "s/replace_with_db/"$DB_NAME"/g" \
-  | sed "s/replace_with_rp/"$RP_NAME"/g" \
+  | sed "s/replace_with_from_rp/"$FROM_RP_NAME"/g" \
+  | sed "s/replace_with_to_rp/"$TO_RP_NAME"/g" \
   | sed "s/replace_with_measurement/"$MEASUREMENT"/g" \
   > "tmp/hack_${DB_NAME}_${MEASUREMENT}.yaml"
 

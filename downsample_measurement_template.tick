@@ -1,6 +1,7 @@
 // Template parameters
 var from_db string
 var from_rp string
+var to_rp string
 var measurement string
 var qy = 'select mean(*) from "' + from_db + '"."' + from_rp + '"."' + measurement + '"'
 var one_year = batch
@@ -13,5 +14,5 @@ var one_year = batch
 one_year
   |influxDBOut()
     .database(from_db)
-    .retentionPolicy('5m_mean_one_year')
+    .retentionPolicy(to_rp)
     .measurement(measurement)
