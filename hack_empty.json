@@ -1,9 +1,0 @@
-{
-    "template-id": "downsample_measurement",
-    "vars": {
-        "measurement": {
-            "type": "string",
-            "value": "empty"
-        }
-    }
-}

@@ -1,7 +1,8 @@
-dbrp "telegraf_general"."original_one_week"
 // Template parameters
+var from_db string
+var from_rp string
 var measurement string
-var qy = 'select mean(*) from "telegraf_general"."original_one_week"."' + measurement + '"'
+var qy = 'select mean(*) from "' + from_db + '"."' + from_rp + '"."' + measurement + '"'
 var one_year = batch
   |query(qy)
     .groupByMeasurement()
@@ -11,6 +12,6 @@ var one_year = batch
     .align()
 one_year
   |influxDBOut()
-    .database('telegraf_general')
+    .database(from_db)
     .retentionPolicy('5m_mean_one_year')
     .measurement(measurement)
